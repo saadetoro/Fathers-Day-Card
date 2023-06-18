@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Happy Father's Day</title>
+  <link rel="icon" href="icon.png" type="image/x-icon">
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      /*background-color: #f5f5f5;*/
+      overflow: hidden;
+      background: url("img 1.jpeg") no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      position: relative;
+      width: 400px;
+      height: 560px;
+      perspective: 1000px;
+    }
+
+    .card-inner {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      transform-style: preserve-3d;
+      transition: transform 0.8s;
+    }
+
+    .card.open .card-inner {
+      transform: rotateY(180deg);
+    }
+
+    .card-front,
+    .card-back {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      backface-visibility: hidden;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-front {
+      background-color: #0d6efd;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transform: rotateY(0deg);
+    }
+
+    .card-back {
+      background-color: #fff;
+      color: #333;
+      padding: 20px;
+      transform: rotateY(-180deg);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .card-back button {
+      margin-bottom: 10px;
+    }
+
+    .card-front img {
+      max-width: 100%;
+      max-height: 100%;
+      border-radius: 10px;
+      object-fit: fill;
+    }
+
+    h1 {
+      margin-top: 0;
+      font-size: 24px;
+    }
+
+    p {
+      font-size: 18px;
+      line-height: 1.5;
+    }
+
+    .audio-button {
+      display: inline-block;
+      margin-right: 10px;
+      padding: 10px 20px;
+      font-size: 16px;
+      background-color: #0d6efd;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .audio-button:hover {
+      background-color: #0a58c2;
+    }
+
+    .confetti-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      pointer-events: none;
+      z-index: 1;
+      overflow: hidden;
+    }
+
+    .confetti {
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      background-color: #e0d815;
+      border-radius: 50%;
+      animation: confetti-fall 4s infinite;
+    }
+
+    @keyframes confetti-fall {
+      0% {
+        transform: translateY(-200vh) rotate(0deg);
+        opacity: 0;
+      }
+      50% {
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(200vh) rotate(1080deg);
+        opacity: 0;
+      }
+    }
+
+    @media only screen and (max-width: 600px) {
+      .card {
+        width: 90%;
+        height: auto;
+        max-height: 400px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="card" onclick="flipCard()">
+      <div class="card-inner">
+        <div class="card-front">
+          <img src="https://www.homemade-gifts-made-easy.com/image-files/printable-fathers-day-cards-thanks-dad-hat-400x560.png" alt="Card Image">
+        </div>
+        <div class="card-back">
+          <h1>Dear Dad,</h1>
+          <button class="audio-button" onclick="playAudio('Mum_vn.ogg'); event.stopPropagation();">Click Me</button>
+          <button class="audio-button" onclick="playAudio('Doyin_vn.ogg'); event.stopPropagation();">Click Me Too</button>
+          <button class="audio-button" onclick="playAudio('me.ogg'); event.stopPropagation();">Me As Well</button>
+          <p>From Your Loving Family</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="confetti-container"></div>
+
+  <script>
+    var currentlyPlayingAudio = null;
+  
+    function flipCard() {
+      var card = document.querySelector('.card');
+      card.classList.toggle('open');
+  
+      if (card.classList.contains('open')) {
+        createConfetti();
+      } else {
+        stopCurrentlyPlayingAudio();
+      }
+    }
+  
+    function createConfetti() {
+      var confettiContainer = document.querySelector('.confetti-container');
+  
+      for (var i = 0; i < 100; i++) {
+        var confetti = document.createElement('div');
+        confetti.classList.add('confetti');
+        confetti.style.left = Math.random() * 100 + 'vw';
+        confetti.style.animationDelay = Math.random() * 4 + 's';
+        confettiContainer.appendChild(confetti);
+      }
+    }
+  
+    function playAudio(audioFile) {
+      stopCurrentlyPlayingAudio();
+  
+      var audio = new Audio(audioFile);
+      audio.play();
+      currentlyPlayingAudio = audio;
+    }
+  
+    function stopCurrentlyPlayingAudio() {
+      if (currentlyPlayingAudio) {
+        currentlyPlayingAudio.pause();
+        currentlyPlayingAudio.currentTime = 0;
+        currentlyPlayingAudio = null;
+      }
+    }
+  </script>  
+</body>
+</html>
